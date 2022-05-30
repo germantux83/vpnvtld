@@ -16,8 +16,10 @@ export class AppService {
     // new WriteStream()
 
     // this.process = spawn('c:\\Program Files\\nodejs\\node.exe', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
-    this.process = spawn('node', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
+    // this.process = spawn('node', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
+
     this.stdout = '';
+    this.process = spawn('/home/service/vpn-eu.sh');
 
     this.process.stdout.on('data', (data) => {
       this.stdout += data;
