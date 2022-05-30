@@ -15,7 +15,8 @@ export class AppService {
   start(): void {
     // new WriteStream()
 
-    this.process = spawn('c:\\Program Files\\nodejs\\node.exe', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
+    // this.process = spawn('c:\\Program Files\\nodejs\\node.exe', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
+    this.process = spawn('node', ['--help']); //, { stdio: [ 'pipe', 'pipe', 'pipe' ]});
     this.stdout = '';
 
     this.process.stdout.on('data', (data) => {
