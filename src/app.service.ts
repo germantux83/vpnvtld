@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ChildProcess, spawn } from 'node:child_process';
+import { ChildProcess, spawn } from 'child_process';
 import { WriteStream } from 'node:fs';
 import { stringify } from 'node:querystring';
 
