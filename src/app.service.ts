@@ -33,13 +33,13 @@ export class AppService {
 
   start(): void {
     this.stdout = '';
-    this.process = spawn('/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli', ['--server', this.ipAndPort, '--user', this.user]);
+    this.process = spawn('sh', ['-c', `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${this.ipAndPort}' --user '${this.user}'`]);
 
     this.process.stdout.on('data', this.onData);
     this.process.stderr.on('data', this.onData);
 
     this.process.on('exit', () => {
-      console.log('\n***ENDE');
+      console.log('\n***ENDE ' + this.process.exitCode);
       this.process = null;
     });
   }
