@@ -16,17 +16,15 @@ export class AppService {
 
   start(): void {
     this.stdout = '';
-    this.process = spawn(
-      '/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli',
-      ['--server', this.ipAndPort, '--user', this.user],
-      {
-        name: 'xterm-color',
-        cols: 80,
-        rows: 30,
-        cwd: process.env.HOME,
-        env: process.env,
-      },
-    );
+    this.process = spawn('bash', [], {
+      name: 'xterm-color',
+      cols: 80,
+      rows: 30,
+      cwd: process.env.HOME,
+      env: process.env,
+    });
+
+    this.process.write(`/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${this.ipAndPort}' --user '${this.user}'\n`);
 
     this.process.onData((data: string) => {
       this.stdout += data;
