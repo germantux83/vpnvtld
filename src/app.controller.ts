@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 export interface StatusResult {
@@ -31,7 +31,10 @@ export class AppController {
   }
 
   @Post('/start')
-  start(): void {
+  start(@Param('ipAndPort') ipAndPort: string, @Param('user') user: string, @Param('otp') otp: string): void {
+    this.appService.ipAndPort = ipAndPort;
+    this.appService.user = user;
+    this.appService.otp = otp;
     this.appService.start();
   }
 
