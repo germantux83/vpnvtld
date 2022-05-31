@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('vpnctld')
     .setDescription('R-Tec Cyber VPN Controller')
     .setVersion('1.0')
-    .addTag('vpn')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

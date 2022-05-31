@@ -6,7 +6,7 @@ export interface StatusResult {
   message: string;
 }
 
-@Controller()
+@Controller('/api/vpn')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
