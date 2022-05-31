@@ -24,7 +24,9 @@ export class AppService {
       env: process.env,
     });
 
-    this.process.write(`/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${this.ipAndPort}' --user '${this.user}'\n`);
+    this.process.write(
+      `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${this.ipAndPort}' --vpnuser '${this.user}'\n`,
+    );
 
     this.process.onData((data: string) => {
       this.stdout += data;

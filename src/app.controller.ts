@@ -31,7 +31,11 @@ export class AppController {
   }
 
   @Post('/start')
-  start(@Param('ipAndPort') ipAndPort: string, @Param('user') user: string, @Param('otp') otp: string): void {
+  start(
+    @Param('ipAndPort') ipAndPort: string,
+    @Param('user') user: string,
+    @Param('otp') otp: string,
+  ): void {
     this.appService.ipAndPort = ipAndPort;
     this.appService.user = user;
     this.appService.otp = otp;
