@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
@@ -46,13 +46,12 @@ export class AppController {
   }
 
   @Post('/start')
-  start(
-    // @Param('ipAndPort') ipAndPort: string,
-    // @Param('user') user: string,
-    // @Param('password') password: string,
-    // @Param('otp') otp: string,
-    @Body() startRequest: StartRequest
-  ): void {
+  start(@Res() res, @Body() startRequest: StartRequest): void {
+    if (this.appService.isRunning()) {
+      res.status(HttpStatus.BAD_REQUEST);
+      return;
+    }
+
     this.appService.ipAndPort = startRequest.ipAndPort;
     this.appService.user = startRequest.user;
     this.appService.password = startRequest.password;
@@ -65,7 +64,12 @@ export class AppController {
   }
 
   @Delete('/stop')
-  stop(): void {
+  stop(@Res() res): void {
+    if (!this.appService.isRunning()) {
+      res.status(HttpStatus.BAD_REQUEST);
+      return;
+    }
+
     this.appService.stop();
   }
 }

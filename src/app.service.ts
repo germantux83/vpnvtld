@@ -15,6 +15,10 @@ export class AppService {
   }
 
   start(): void {
+    if (this.process != null) {
+      return;
+    }
+
     this.stdout = '';
     this.process = spawn('bash', [], {
       name: 'xterm-color',
