@@ -34,10 +34,12 @@ export class AppController {
   start(
     @Param('ipAndPort') ipAndPort: string,
     @Param('user') user: string,
+    @Param('password') password: string,
     @Param('otp') otp: string,
   ): void {
     this.appService.ipAndPort = ipAndPort;
     this.appService.user = user;
+    this.appService.password = password;
     this.appService.otp = otp;
     this.appService.start();
   }
