@@ -39,7 +39,7 @@ export class AppController {
   }
 
   @Post('/start')
-  start(@Res() res, @Body() startRequest: StartRequest): void {
+  start(@Body() startRequest: StartRequest): void {
     if (this.appService.isRunning()) {
       throw new BadRequestException('Service already running');
     }
