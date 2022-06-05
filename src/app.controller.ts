@@ -4,6 +4,7 @@ import { AppService, VpnStatus } from './app.service';
 
 export interface StatusResult {
   error: VpnStatus;
+  message: string;
   output: string;
 }
 
@@ -27,8 +28,10 @@ export class AppController {
 
   @Get('/status')
   getStatus(): StatusResult {
+    const status = this.appService.getStatus();
     return {
-      error: this.appService.getStatus(),
+      error: status,
+      message: VpnStatus[status],
       output: this.appService.getStdOut(),
     };
   }
@@ -48,9 +51,6 @@ export class AppController {
     this.appService.user = startRequest.user;
     this.appService.password = startRequest.password;
     this.appService.otp = startRequest.otp;
-
-    console.log(`ipAndPort: ${startRequest.ipAndPort}`);
-    console.log(`user: ${startRequest.user}`);
 
     this.appService.start();
   }
