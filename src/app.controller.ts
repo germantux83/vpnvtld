@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
-import { AppService } from './app.service';
+import { AppService, VpnStatus } from './app.service';
 
 export interface StatusResult {
-  error: boolean;
-  message: string;
+  error: VpnStatus;
+  output: string;
 }
 
 export class StartRequest {
@@ -27,17 +27,10 @@ export class AppController {
 
   @Get('/status')
   getStatus(): StatusResult {
-    if (this.appService.isRunning()) {
-      return {
-        error: false,
-        message: 'Up and running',
-      };
-    } else {
-      return {
-        error: true,
-        message: 'Not running',
-      };
-    }
+    return {
+      error: this.appService.getStatus(),
+      output: this.appService.getStdOut(),
+    };
   }
 
   @Get('/output')

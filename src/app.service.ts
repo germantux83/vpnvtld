@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { IPty, spawn } from 'node-pty';
 
+export enum VpnStatus {
+  None,
+  Starting,
+  Connected,
+  AuthFailed,
+  Error,
+}
 @Injectable()
 export class AppService {
   process: IPty = null;
@@ -12,6 +19,21 @@ export class AppService {
 
   isRunning(): boolean {
     return this.process != null;
+  }
+
+  getStatus(): VpnStatus {
+    if (!this.isRunning()) {
+      return VpnStatus.None;
+    }
+
+    if (this.stdout.includes('NOTICE::Insufficient credential(s). Please check the password, client certificate, etc.')) {
+      return VpnStatus.AuthFailed;
+    }
+    if (this.stdout.includes('STATUS::Set up tunnel failed')) {
+      return VpnStatus.Error;
+    }
+
+    return VpnStatus.Starting;
   }
 
   start(): void {
@@ -45,14 +67,6 @@ export class AppService {
       }
       if (this.stdout.endsWith('A FortiToken code is required for SSL-VPN login authentication.\r\n')) {
         this.process.write(this.otp + '\n');
-      }
-  
-      // Errors
-      if (this.stdout.includes('STATUS::Set up tunnel failed')) {
-        console.log('FAILED');
-      }
-      if (this.stdout.includes('NOTICE::Insufficient credential(s). Please check the password, client certificate, etc.')) {
-        console.log('AUTH FAILED');
       }
     });
 
