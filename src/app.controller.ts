@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { AppService, VpnStatus } from './app.service';
 
@@ -41,8 +41,7 @@ export class AppController {
   @Post('/start')
   start(@Res() res, @Body() startRequest: StartRequest): void {
     if (this.appService.isRunning()) {
-      res.status(HttpStatus.BAD_REQUEST);
-      return;
+      throw new BadRequestException('Service already running');
     }
 
     this.appService.ipAndPort = startRequest.ipAndPort;
@@ -57,10 +56,9 @@ export class AppController {
   }
 
   @Delete('/stop')
-  stop(@Res() res): void {
+  stop(): void {
     if (!this.appService.isRunning()) {
-      res.status(HttpStatus.BAD_REQUEST);
-      return;
+      throw new BadRequestException('Service not running');
     }
 
     this.appService.stop();
