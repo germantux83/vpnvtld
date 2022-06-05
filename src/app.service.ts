@@ -5,10 +5,10 @@ import { IPty, spawn } from 'node-pty';
 export class AppService {
   process: IPty = null;
   stdout: string = null;
-  password = '';
-  ipAndPort = '91.103.8.129:443';
-  user = 'khs-fieldservices-central';
-  otp = '000000';
+  password: string = null;
+  ipAndPort: string = null;
+  user: string = null;
+  otp: string = null;
 
   isRunning(): boolean {
     return this.process != null;
@@ -24,10 +24,10 @@ export class AppService {
       env: process.env,
     });
 
-    const test = '123123';
+    const ipAndPort_ = this.ipAndPort;
 
     this.process.write(
-      `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${test}' --vpnuser '${this.user}'\n`,
+      `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${ipAndPort_}' --vpnuser '${this.user}'\n`,
     );
 
     this.process.onData((data: string) => {
