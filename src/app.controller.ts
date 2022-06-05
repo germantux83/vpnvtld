@@ -42,7 +42,7 @@ export class AppController {
 
   @Get('/output')
   getOutput(): string {
-    return this.appService.getStdOut();
+    return this.appService.getStdOut() + 'ENDE';
   }
 
   @Post('/start')
