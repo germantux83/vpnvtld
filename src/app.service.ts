@@ -34,12 +34,15 @@ export class AppService {
       this.stdout += data;
 
       if (this.stdout.endsWith('Password for VPN:')) {
+        console.log('Send Password');
         this.process.write(this.password + '\n');
       }
-      if (this.stdout.endsWith('(Y/N) \n')) {
-        this.process.write('Y' + '\n');
+      if (this.stdout.endsWith('(Y/N)\n')) {
+        console.log('Send YES');
+        this.process.write('Y\n');
       }
       if (this.stdout.endsWith('A FortiToken code is required for SSL-VPN login authentication.\n')) {
+        console.log('Send OTP');
         this.process.write(this.otp + '\n');
       }
   
