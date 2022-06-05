@@ -32,6 +32,9 @@ export class AppService {
     if (this.stdout.includes('STATUS::Set up tunnel failed')) {
       return VpnStatus.Error;
     }
+    if (this.stdout.includes('STATUS::Connected')) {
+      return VpnStatus.Connected;
+    }
 
     return VpnStatus.Starting;
   }
@@ -68,6 +71,10 @@ export class AppService {
       if (this.stdout.endsWith('A FortiToken code is required for SSL-VPN login authentication.\r\n')) {
         this.process.write(this.otp + '\n');
       }
+
+      if (this.stdout.endsWith('STATUS::Connected\r\n')) {
+        console.log('CONNECTED');
+      }
     });
 
     this.process.onExit((e) => {
@@ -85,5 +92,6 @@ export class AppService {
       return;
     }
     this.process.kill('SIGKILL');
+    this.stdout = '';
   }
 }
