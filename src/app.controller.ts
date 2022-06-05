@@ -41,6 +41,10 @@ export class AppController {
     this.appService.user = user;
     this.appService.password = password;
     this.appService.otp = otp;
+
+    console.log(`ipAndPort: ${ipAndPort}`);
+    console.log(`user: ${user}`);
+
     this.appService.start();
   }
 
