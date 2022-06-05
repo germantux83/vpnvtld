@@ -34,20 +34,22 @@ export class AppService {
       this.stdout += data;
 
       if (this.stdout.endsWith('Password for VPN:')) {
-        console.log('Send Password');
         this.process.write(this.password + '\n');
       }
       if (this.stdout.endsWith('(Y/N)\r\n')) {
-        console.log('Send YES');
         this.process.write('Y\n');
       }
       if (this.stdout.endsWith('A FortiToken code is required for SSL-VPN login authentication.\r\n')) {
-        console.log('Send OTP');
         this.process.write(this.otp + '\n');
       }
   
       // Errors
-      // 'NOTICE::Insufficient credential(s). Please check the password, client certificate, etc.'
+      if (this.stdout.includes('STATUS::Set up tunnel failed')) {
+        console.log('FAILED');
+      }
+      if (this.stdout.includes('NOTICE::Insufficient credential(s). Please check the password, client certificate, etc.')) {
+        console.log('AUTH FAILED');
+      }
     });
 
     this.process.onExit((e) => {
