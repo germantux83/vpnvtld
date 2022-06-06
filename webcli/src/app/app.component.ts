@@ -16,6 +16,13 @@ export interface StatusResult {
   output: string;
 }
 
+export interface StartRequest {
+  ipAndPort: string;
+  user: string;
+  password: string;
+  otp: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -29,6 +36,10 @@ export class AppComponent implements OnInit {
     output: '',
   };
 
+  // baseUrl = 'http://192.168.159.128:3000';
+  // baseUrl = 'http://127.0.0.1:3000';
+  baseUrl = '';
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -36,16 +47,26 @@ export class AppComponent implements OnInit {
   }
 
   public updateStatus(): void {
-    this.http.get<StatusResult>('http://192.168.159.128:3000/api/vpn/status').subscribe((status: StatusResult) => {
+    this.http.get<StatusResult>(`${this.baseUrl}/api/vpn/status`).subscribe((status: StatusResult) => {
       this.status = status;
     });
   }
 
   public onStart(): void {
-    console.log('START');
+    const req: StartRequest = {
+      ipAndPort: '91.103.8.129:443',
+      otp: '100200',
+      password: 'H5ETUNh8gFUUxwlhPQ-j',
+      user: 'khs-fieldservices-central',
+    };
+    this.http.post<void>(`${this.baseUrl}/api/vpn/start`, req).subscribe(() => {
+      this.updateStatus();
+    });
   }
 
   public onStop(): void {
-    console.log('STOP');
+    this.http.delete<void>(`${this.baseUrl}/api/vpn/stop`).subscribe(() => {
+      this.updateStatus();
+    });
   }
 }
