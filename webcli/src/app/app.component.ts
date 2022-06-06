@@ -23,12 +23,18 @@ export interface StartRequest {
   otp: string;
 }
 
+function nvl(v: string, n = '') {
+  const s = localStorage.getItem(v);
+  if (s != null) return s as string;
+  return n;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit {
   title = 'webcli';
   status: StatusResult = {
     error: VpnStatus.None,
@@ -40,21 +46,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   // baseUrl = 'http://127.0.0.1:3000';
   baseUrl = '';
 
-  
-
   req: StartRequest = {
-    ipAndPort: '91.103.8.129:443',
+    ipAndPort: nvl('ipAndPort', '91.103.8.129:443'),
     otp: '',
-    password: '',
-    user: '',
+    password: nvl('password'),
+    user: nvl('user'),
   };
 
   @ViewChild('textarea') textarea!: ElementRef;
 
   constructor(private http: HttpClient) {}
-
-  ngAfterViewInit(): void {
-  }
 
   ngOnInit(): void {
     this.updateStatusTimer();
@@ -72,6 +73,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public onStart(): void {
+    localStorage.setItem('ipAndPort', this.req.ipAndPort);
+    localStorage.setItem('user', this.req.user);
+    localStorage.setItem('password', this.req.password);
+
     this.http.post<void>(`${this.baseUrl}/api/vpn/start`, this.req).subscribe(() => {
       this.updateStatus();
     });
