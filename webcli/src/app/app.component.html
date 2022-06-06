@@ -1,45 +1,51 @@
-<h1>
-  R-Tec VPN Cyber
-</h1>
-
-<div *ngIf="status.error == 0">
-  <form (ngSubmit)="onStart()" #userForm="ngForm">
-    <div class="preference">
-      <label for="ipAndPort">Host:</label>
-      <!-- <input id="ipAndPort" [(ngModel)]="req.ipAndPort" /> -->
-      <select id="ipAndPort" required [(ngModel)]="req.ipAndPort" name="ipAndPort">
-        <option value="91.103.8.129:443" selected>VPN EU</option>
-        <option value="91.103.8.129:443">VPN US</option>
-        <option value="91.103.8.129:443">VPN CN</option>
-      </select>
-    </div>
-    <div class="preference">
-      <label for="user">User:</label>
-      <input id="user" [(ngModel)]="req.user" name="user" />
-    </div>
-    <div class="preference">
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="req.password" name="password" />
-    </div>
-    <div class="preference">
-      <label for="otp">OTP:</label>
-      <input id="otp" [(ngModel)]="req.otp" name="otp" />
-    </div>
-
-    <button type="submit" (click)="onStart()">Start</button>
-  </form>
+<div class="container">
+  <h3>
+    R-Tec VPN Cyber
+  </h3>
 </div>
 
-<div *ngIf="status.error != 0">
-  <div>
-    <button (click)="onStop()">Stop</button>
-  </div>
+<div class="container">
+  <div *ngIf="status.error == 0">
+    <form (ngSubmit)="onStart()" #userForm="ngForm">
+      <div class="form-group">
+        <label for="ipAndPort">Host:</label>
+        <!-- <input id="ipAndPort" [(ngModel)]="req.ipAndPort" /> -->
+        <select class="form-control" id="ipAndPort" required [(ngModel)]="req.ipAndPort" name="ipAndPort">
+          <option value="91.103.8.129:443" selected>VPN EU</option>
+          <option value="91.103.8.129:443">VPN US</option>
+          <option value="91.103.8.129:443">VPN CN</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="user">User:</label>
+        <input class="form-control" id="user" required [(ngModel)]="req.user" name="user" />
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input class="form-control" type="password" id="password" required [(ngModel)]="req.password" name="password" />
+      </div>
+      <div class="form-group">
+        <label for="otp">OTP:</label>
+        <input class="form-control" id="otp" required [(ngModel)]="req.otp" name="otp" />
+      </div>
 
-  <div>
-    {{status.message}}
+      <button type="submit" class="btn btn-success" (click)="onStart()">Start</button>
+    </form>
   </div>
+</div>
 
-  <div>
-    <textarea #textarea rows="30" cols="80" [scrollTop]="textarea.scrollHeight">{{status.output}}</textarea>
+<div class="container">
+  <div *ngIf="status.error != 0">
+    <div>
+      <button class="btn btn-danger" (click)="onStop()">Stop</button>
+    </div>
+
+    <h1 class="display-2">
+      {{status.message}}
+    </h1>
+
+    <div>
+      <textarea #textarea rows="30" readonly cols="80" [scrollTop]="textarea.scrollHeight">{{status.output}}</textarea>
+    </div>
   </div>
 </div>
