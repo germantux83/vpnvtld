@@ -44,8 +44,8 @@
       {{status.message}}
     </h1>
 
-    <div>
-      <textarea #textarea rows="30" readonly cols="80" [scrollTop]="textarea.scrollHeight">{{status.output}}</textarea>
+    <div class="form-group">
+      <textarea class="form-control" #textarea rows="30" readonly [scrollTop]="textarea.scrollHeight">{{status.output}}</textarea>
     </div>
   </div>
 </div>

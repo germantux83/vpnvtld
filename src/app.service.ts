@@ -57,10 +57,11 @@ export class AppService {
       env: process.env,
     });
 
-    const ipAndPort_ = this.ipAndPort;
+    const ipAndPort_ = this.ipAndPort.substring(0, 255).replace("'", '-');
+    const user_ = this.user.substring(0, 255).replace("'", '-');
 
     this.process.write(
-      `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${ipAndPort_}' --vpnuser '${this.user}'\n`,
+      `/opt/forticlientsslvpn/64bit/forticlientsslvpn_cli --server '${ipAndPort_}' --vpnuser '${user_}'\n`,
     );
 
     this.process.onData((data: string) => {
