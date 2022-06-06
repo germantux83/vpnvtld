@@ -6,7 +6,7 @@ import { join } from 'path';
 
 @Module({
   imports: [ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', '..', 'webcli_dist'),
+    rootPath: join(__dirname, '..', 'webcli_dist'),
   }),],
   controllers: [AppController],
   providers: [AppService],
