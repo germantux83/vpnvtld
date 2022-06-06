@@ -60,13 +60,7 @@ export class AppComponent implements OnInit {
   }
 
   public onStart(): void {
-    const req: StartRequest = {
-      ipAndPort: '91.103.8.129:443',
-      otp: '100200',
-      password: 'H5ETUNh8gFUUxwlhPQ-j',
-      user: 'khs-fieldservices-central',
-    };
-    this.http.post<void>(`${this.baseUrl}/api/vpn/start`, req).subscribe(() => {
+    this.http.post<void>(`${this.baseUrl}/api/vpn/start`, this.req).subscribe(() => {
       this.updateStatus();
     });
   }
