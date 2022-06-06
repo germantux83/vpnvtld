@@ -1,0 +1,22 @@
+<h1>
+  R-Tec VPN Cyber
+</h1>
+
+<div *ngIf="status.error == 0">
+  <button (click)="onStart()">Start</button>
+</div>
+
+<div *ngIf="status.error != 0">
+  <div>
+    <button (click)="onStop()">Stop</button>
+  </div>
+
+  <div>
+    {{status.message}}
+  </div>
+
+  <div>
+    <!-- [scrollTop]="textarea.scrollHeight" -->
+    <textarea #textarea rows="30" cols="80" >{{status.output}}</textarea>
+  </div>
+</div>

@@ -5,6 +5,7 @@ export enum VpnStatus {
   None,
   Starting,
   Connected,
+  Closed,
   AuthFailed,
   Error,
 }
@@ -31,6 +32,9 @@ export class AppService {
     }
     if (this.stdout.includes('STATUS::Set up tunnel failed')) {
       return VpnStatus.Error;
+    }
+    if (this.stdout.includes('STATUS::Tunnel closed')) {
+      return VpnStatus.Closed;
     }
     if (this.stdout.includes('STATUS::Connected')) {
       return VpnStatus.Connected;
