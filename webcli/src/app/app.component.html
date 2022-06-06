@@ -3,7 +3,7 @@
 </h1>
 
 <div *ngIf="status.error == 0">
-  Host: <input [(ngModel)]="req.ipAndPort" /><br/>
+  <label for="ipAndPort">Host:</label><input id="ipAndPort" [(ngModel)]="req.ipAndPort" /><br/>
   User: <input [(ngModel)]="req.user" /><br/>
   Password: <input [(ngModel)]="req.password" /><br/>
   OTP: <input [(ngModel)]="req.otp" /><br/>
