@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export enum VpnStatus {
@@ -28,7 +28,7 @@ export interface StartRequest {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'webcli';
   status: StatusResult = {
     error: VpnStatus.None,
@@ -40,6 +40,8 @@ export class AppComponent implements OnInit {
   // baseUrl = 'http://127.0.0.1:3000';
   baseUrl = '';
 
+  
+
   req: StartRequest = {
     ipAndPort: '91.103.8.129:443',
     otp: '',
@@ -47,7 +49,12 @@ export class AppComponent implements OnInit {
     user: '',
   };
 
+  @ViewChild('textarea') textarea!: ElementRef;
+
   constructor(private http: HttpClient) {}
+
+  ngAfterViewInit(): void {
+  }
 
   ngOnInit(): void {
     this.updateStatusTimer();

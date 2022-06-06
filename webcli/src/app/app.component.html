@@ -33,7 +33,6 @@
   </div>
 
   <div>
-    <!-- [scrollTop]="textarea.scrollHeight" -->
-    <textarea #textarea rows="30" cols="80" >{{status.output}}</textarea>
+    <textarea #textarea rows="30" cols="80" [scrollTop]="textarea.scrollHeight">{{status.output}}</textarea>
   </div>
 </div>
