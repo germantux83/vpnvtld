@@ -40,6 +40,13 @@ export class AppComponent implements OnInit {
   // baseUrl = 'http://127.0.0.1:3000';
   baseUrl = '';
 
+  req: StartRequest = {
+    ipAndPort: '91.103.8.129:443',
+    otp: '',
+    password: '',
+    user: '',
+  };
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
