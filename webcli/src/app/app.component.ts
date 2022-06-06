@@ -36,9 +36,9 @@ export class AppComponent implements OnInit {
     output: '',
   };
 
-  // baseUrl = 'http://192.168.159.128:3000';
+  baseUrl = 'http://192.168.159.128:3000';
   // baseUrl = 'http://127.0.0.1:3000';
-  baseUrl = '';
+  // baseUrl = '';
 
   req: StartRequest = {
     ipAndPort: '91.103.8.129:443',
@@ -50,13 +50,18 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.updateStatus();
+    this.updateStatusTimer();
   }
 
   public updateStatus(): void {
     this.http.get<StatusResult>(`${this.baseUrl}/api/vpn/status`).subscribe((status: StatusResult) => {
       this.status = status;
     });
+  }
+
+  public updateStatusTimer(): void {
+    this.updateStatus();
+    setTimeout(() => this.updateStatusTimer(), 1000);
   }
 
   public onStart(): void {
