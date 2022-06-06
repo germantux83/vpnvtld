@@ -1,0 +1,9 @@
+[Unit]
+Description=VPNCTLD Cyber Service
+
+[Service]
+Type=simple
+ExecStart=node /home/service/vpnvtld/dist/main
+
+[Install]
+WantedBy=multi-user.target
